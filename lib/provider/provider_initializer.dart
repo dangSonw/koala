@@ -5,15 +5,15 @@ import 'package:provider/single_child_widget.dart';
 import '../themes/theme_provider.dart';
 import '../services/main_screen/setting_page_services.dart';
 import 'main_screen/home_page_provider.dart';
-import 'main_screen/search_page_provider.dart';
-import 'main_screen/favorites_page_provider.dart';
+// import 'main_screen/search_page_provider.dart';
+// import 'main_screen/favorites_page_provider.dart';
 
 class AppProviders {
   static List<SingleChildWidget> providers(SettingsService? settingsService) => [
         ChangeNotifierProvider(create: (_) => _createThemeProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
-        ChangeNotifierProvider(create: (_) => SearchProvider()),
-        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+        // ChangeNotifierProvider(create: (_) => SearchProvider()),
+        // ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         Provider<SettingsService>(
           create: (_) => _createSettingsService(settingsService),
         ),

@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import '../cache/storage_manager.dart';
+
+class ThemeService {
+  static const String _themeKey = 'isDarkMode';
+  
+  // Get current theme mode from Hive
+  static bool getDarkMode() {
+    try {
+      return StorageManager.getSetting<bool>(_themeKey, defaultValue: false) ?? false;
+    } catch (e) {
+      debugPrint('Error getting theme: $e');
+      return false;
+    }
+  }
+  
+  // Save theme mode to Hive
+  static Future<bool> setDarkMode(bool isDarkMode) async {
+    try {
+      await StorageManager.setSetting(_themeKey, isDarkMode);
+      return true;
+    } catch (e) {
+      debugPrint('Error setting theme: $e');
+      return false;
+    }
+  }
+  
+  // Toggle theme mode
+  static Future<bool> toggleTheme() async {
+    try {
+      final currentMode = getDarkMode();
+      final newMode = !currentMode;
+      return await setDarkMode(newMode);
+    } catch (e) {
+      debugPrint('Error toggling theme: $e');
+      return false;
+    }
+  }
+}

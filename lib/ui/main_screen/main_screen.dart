@@ -18,9 +18,9 @@ class MainScreenState extends State<MainScreen> {
 
   final List<Widget> pages = const [
     HomePage(),
-    SearchPage(),
-    FavoritesPage(),
-    SettingsPage(),
+    // SearchPage(),
+    // FavoritesPage(),
+    // SettingsPage(),
   ];
 
   @override
