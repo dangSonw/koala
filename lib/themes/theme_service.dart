@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../cache/storage_manager.dart';
+import '../models/settings_keys.dart';
 
 class ThemeService {
-  static const String _themeKey = 'isDarkMode';
+  static const String _themeKey = SettingsKeys.darkMode;
   
   // Get current theme mode from Hive
   static bool getDarkMode() {

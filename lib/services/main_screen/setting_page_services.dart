@@ -1,20 +1,11 @@
 import 'package:flutter/rendering.dart';
 import '../../cache/storage_manager.dart';
+import '../../models/settings_keys.dart';
 
 class SettingsService {
   static SettingsService? _instance;
   
-  // Keys for settings - using consistent naming with ThemeService
-  static const String keyDarkMode = 'isDarkMode';
-  static const String keyNotifications = 'notifications';
-  static const String keyOfflineMode = 'offlineMode';
-  static const String keyScientificNames = 'scientificNames';
-  static const String keyAutoPlayVideo = 'autoPlayVideo';
-  static const String keyHapticFeedback = 'hapticFeedback';
-  static const String keySyncData = 'syncData';
-  static const String keyLanguage = 'language';
-  static const String keyImageQuality = 'imageQuality';
-  static const String keyDownloadQuality = 'downloadQuality';
+  // Keys are centralized in SettingsKeys
 
   // Private constructor
   SettingsService._();
@@ -53,26 +44,26 @@ class SettingsService {
   }
 
   // Getters for specific settings with default values - Safe null handling
-  bool get darkMode => getValue<bool>(keyDarkMode, defaultValue: false) ?? false;
-  bool get notifications => getValue<bool>(keyNotifications, defaultValue: true) ?? true;
-  bool get offlineMode => getValue<bool>(keyOfflineMode, defaultValue: false) ?? false;
-  bool get scientificNames => getValue<bool>(keyScientificNames, defaultValue: true) ?? true;
-  bool get autoPlayVideo => getValue<bool>(keyAutoPlayVideo, defaultValue: false) ?? false;
-  bool get hapticFeedback => getValue<bool>(keyHapticFeedback, defaultValue: true) ?? true;
-  bool get syncData => getValue<bool>(keySyncData, defaultValue: true) ?? true;
-  String get language => getValue<String>(keyLanguage, defaultValue: 'English') ?? 'English';
-  String get imageQuality => getValue<String>(keyImageQuality, defaultValue: 'High') ?? 'High';
-  String get downloadQuality => getValue<String>(keyDownloadQuality, defaultValue: 'Medium') ?? 'Medium';
+  bool get darkMode => getValue<bool>(SettingsKeys.darkMode, defaultValue: false) ?? false;
+  bool get notifications => getValue<bool>(SettingsKeys.notifications, defaultValue: true) ?? true;
+  bool get offlineMode => getValue<bool>(SettingsKeys.offlineMode, defaultValue: false) ?? false;
+  bool get scientificNames => getValue<bool>(SettingsKeys.scientificNames, defaultValue: true) ?? true;
+  bool get autoPlayVideo => getValue<bool>(SettingsKeys.autoPlayVideo, defaultValue: false) ?? false;
+  bool get hapticFeedback => getValue<bool>(SettingsKeys.hapticFeedback, defaultValue: true) ?? true;
+  bool get syncData => getValue<bool>(SettingsKeys.syncData, defaultValue: true) ?? true;
+  String get language => getValue<String>(SettingsKeys.language, defaultValue: 'English') ?? 'English';
+  String get imageQuality => getValue<String>(SettingsKeys.imageQuality, defaultValue: 'High') ?? 'High';
+  String get downloadQuality => getValue<String>(SettingsKeys.downloadQuality, defaultValue: 'Medium') ?? 'Medium';
 
   // Setters for specific settings
-  Future<bool> setDarkMode(bool value) => setValue(keyDarkMode, value);
-  Future<bool> setNotifications(bool value) => setValue(keyNotifications, value);
-  Future<bool> setOfflineMode(bool value) => setValue(keyOfflineMode, value);
-  Future<bool> setScientificNames(bool value) => setValue(keyScientificNames, value);
-  Future<bool> setAutoPlayVideo(bool value) => setValue(keyAutoPlayVideo, value);
-  Future<bool> setHapticFeedback(bool value) => setValue(keyHapticFeedback, value);
-  Future<bool> setSyncData(bool value) => setValue(keySyncData, value);
-  Future<bool> setLanguage(String value) => setValue(keyLanguage, value);
-  Future<bool> setImageQuality(String value) => setValue(keyImageQuality, value);
-  Future<bool> setDownloadQuality(String value) => setValue(keyDownloadQuality, value);
+  Future<bool> setDarkMode(bool value) => setValue(SettingsKeys.darkMode, value);
+  Future<bool> setNotifications(bool value) => setValue(SettingsKeys.notifications, value);
+  Future<bool> setOfflineMode(bool value) => setValue(SettingsKeys.offlineMode, value);
+  Future<bool> setScientificNames(bool value) => setValue(SettingsKeys.scientificNames, value);
+  Future<bool> setAutoPlayVideo(bool value) => setValue(SettingsKeys.autoPlayVideo, value);
+  Future<bool> setHapticFeedback(bool value) => setValue(SettingsKeys.hapticFeedback, value);
+  Future<bool> setSyncData(bool value) => setValue(SettingsKeys.syncData, value);
+  Future<bool> setLanguage(String value) => setValue(SettingsKeys.language, value);
+  Future<bool> setImageQuality(String value) => setValue(SettingsKeys.imageQuality, value);
+  Future<bool> setDownloadQuality(String value) => setValue(SettingsKeys.downloadQuality, value);
 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'main_screen/setting_page_services.dart';
 import '../cache/storage_manager.dart';
 import '../themes/theme_provider.dart';
+import '../models/settings_keys.dart';
 
 class AppInitializer {
   static SettingsService? _settingsService;
@@ -50,7 +51,7 @@ class AppInitializer {
   static Future<void> loadSettingsAndUpdateTheme(BuildContext context) async {
     debugPrint('AppInitializer: Loading settings and updating theme...');
     try {
-      final isDarkMode = StorageManager.getSetting<bool>('isDarkMode', defaultValue: false) ?? false;
+      final isDarkMode = StorageManager.getSetting<bool>(SettingsKeys.darkMode, defaultValue: false) ?? false;
       
       // Update ThemeProvider
       final themeProvider = Provider.of<ThemeProvider>(context, listen: false);

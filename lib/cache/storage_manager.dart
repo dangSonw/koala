@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../models/box_names.dart';
 
 class StorageManager {
   static Box<dynamic>? _settingsBox;
@@ -17,9 +18,9 @@ class StorageManager {
       await Hive.initFlutter();
       
       // Open all required boxes
-      _settingsBox = await Hive.openBox('settings');
-      _favoritesBox = await Hive.openBox('favorites');
-      _searchHistoryBox = await Hive.openBox('search_history');
+      _settingsBox = await Hive.openBox(BoxNames.settings);
+      _favoritesBox = await Hive.openBox(BoxNames.favorites);
+      _searchHistoryBox = await Hive.openBox(BoxNames.searchHistory);
       
       _isInitialized = true;
       debugPrint('StorageManager initialized successfully');
