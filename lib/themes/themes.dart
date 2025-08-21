@@ -6,6 +6,7 @@ class AppThemes {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      fontFamily: 'Schyler',
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.seedColor,
         brightness: Brightness.light,
@@ -17,6 +18,7 @@ class AppThemes {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      fontFamily: 'Schyler',
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.seedColor,
         brightness: Brightness.dark,
