@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import '../cache/storage_manager.dart';
 import '../models/settings_keys.dart';
+import '../utils/debug_utils.dart';
 
 class ThemeService {
   static const String _themeKey = SettingsKeys.darkMode;
@@ -10,7 +10,7 @@ class ThemeService {
     try {
       return StorageManager.getSetting<bool>(_themeKey, defaultValue: false) ?? false;
     } catch (e) {
-      debugPrint('Error getting theme: $e');
+  debugPrintError('THEME', 'Error getting theme: $e');
       return false;
     }
   }
@@ -21,7 +21,7 @@ class ThemeService {
       await StorageManager.setSetting(_themeKey, isDarkMode);
       return true;
     } catch (e) {
-      debugPrint('Error setting theme: $e');
+  debugPrintError('THEME', 'Error setting theme: $e');
       return false;
     }
   }
@@ -33,7 +33,7 @@ class ThemeService {
       final newMode = !currentMode;
       return await setDarkMode(newMode);
     } catch (e) {
-      debugPrint('Error toggling theme: $e');
+  debugPrintError('THEME', 'Error toggling theme: $e');
       return false;
     }
   }
