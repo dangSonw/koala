@@ -1,5 +1,4 @@
 import '../utils/debug_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/box_names.dart';
 
@@ -24,9 +23,9 @@ class StorageManager {
       _searchHistoryBox = await Hive.openBox(BoxNames.searchHistory);
       
       _isInitialized = true;
-  debugPrintSuccess('CACHE', 'StorageManager initialized successfully');
+      debugPrintSuccess('CACHE', 'StorageManager initialized successfully');
     } catch (e) {
-  debugPrintError('CACHE', 'Error initializing StorageManager: $e');
+      debugPrintError('CACHE', 'Error initializing StorageManager: $e');
       rethrow;
     }
   }
