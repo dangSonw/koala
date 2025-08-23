@@ -1,3 +1,4 @@
+import '../utils/debug_utils.dart';
 import 'package:flutter/material.dart';
 import 'theme_service.dart';
 
@@ -11,21 +12,21 @@ class ThemeProvider extends ChangeNotifier {
   // Initialize theme from storage
   Future<void> initialize() async {
     if (_isInitialized) {
-      debugPrint('ThemeProvider: Already initialized, skipping');
+  debugPrintInfo('THEME', 'Already initialized, skipping');
       return;
     }
     
-    debugPrint('ThemeProvider: Starting initialization...');
+  debugPrintSpecial('THEME', 'Starting initialization...');
     try {
       _isDarkMode = ThemeService.getDarkMode(); // Now synchronous
       _isInitialized = true;
-      debugPrint('ThemeProvider: Initialized successfully with darkMode: $_isDarkMode');
+  debugPrintSuccess('THEME', 'Initialized successfully with darkMode: $_isDarkMode');
       notifyListeners();
     } catch (e) {
-      debugPrint('ThemeProvider: Error initializing theme: $e');
+  debugPrintError('THEME', 'Error initializing theme: $e');
       _isDarkMode = false;
       _isInitialized = true;
-      debugPrint('ThemeProvider: Fallback to light mode due to error');
+  debugPrintWarning('THEME', 'Fallback to light mode due to error');
       notifyListeners();
     }
   }
@@ -33,39 +34,39 @@ class ThemeProvider extends ChangeNotifier {
   // Set theme mode
   Future<void> setDarkMode(bool mode) async {
     if (_isDarkMode == mode) {
-      debugPrint('ThemeProvider: Theme mode already set to $mode, skipping');
+  debugPrintInfo('THEME', 'Theme mode already set to $mode, skipping');
       return;
     }
     
-    debugPrint('ThemeProvider: Setting theme mode to $mode...');
+  debugPrintSpecial('THEME', 'Setting theme mode to $mode...');
     try {
       final success = await ThemeService.setDarkMode(mode);
       if (success) {
         _isDarkMode = mode;
-        debugPrint('ThemeProvider: Theme mode successfully changed to $mode');
+  debugPrintSuccess('THEME', 'Theme mode successfully changed to $mode');
         notifyListeners();
       } else {
-        debugPrint('ThemeProvider: Failed to save theme mode to storage');
+  debugPrintError('THEME', 'Failed to save theme mode to storage');
       }
     } catch (e) {
-      debugPrint('ThemeProvider: Error setting theme: $e');
+  debugPrintError('THEME', 'Error setting theme: $e');
     }
   }
 
   // Toggle theme mode
   Future<void> toggleTheme() async {
-    debugPrint('ThemeProvider: Toggling theme from $_isDarkMode to ${!_isDarkMode}...');
+  debugPrintSpecial('THEME', 'Toggling theme from $_isDarkMode to ${!_isDarkMode}...');
     try {
       final success = await ThemeService.toggleTheme();
       if (success) {
         _isDarkMode = !_isDarkMode;
-        debugPrint('ThemeProvider: Theme toggled successfully to $_isDarkMode');
+  debugPrintSuccess('THEME', 'Theme toggled successfully to $_isDarkMode');
         notifyListeners();
       } else {
-        debugPrint('ThemeProvider: Failed to toggle theme in storage');
+  debugPrintError('THEME', 'Failed to toggle theme in storage');
       }
     } catch (e) {
-      debugPrint('ThemeProvider: Error toggling theme: $e');
+  debugPrintError('THEME', 'Error toggling theme: $e');
     }
   }
 

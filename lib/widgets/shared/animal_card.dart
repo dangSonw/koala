@@ -1,3 +1,4 @@
+import '../../utils/debug_utils.dart';
 import 'package:flutter/material.dart';
 import '../../themes/colors.dart';
 
@@ -146,7 +147,7 @@ class AnimalCard extends StatelessWidget {
           );
         },
         errorBuilder: (context, error, stackTrace) {
-          debugPrint('AnimalCard: Error loading network image: $error');
+          debugPrintError('WIDGETS', 'AnimalCard: Error loading network image: $error');
           return _buildErrorPlaceholder(context);
         },
       );
@@ -158,7 +159,7 @@ class AnimalCard extends StatelessWidget {
         height: 112,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
-          debugPrint('AnimalCard: Error loading asset image: $error');
+          debugPrintError('WIDGETS', 'AnimalCard: Error loading asset image: $error');
           return _buildErrorPlaceholder(context);
         },
       );

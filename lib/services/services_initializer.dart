@@ -1,3 +1,4 @@
+import '../utils/debug_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'main_screen/setting_page_services.dart';
@@ -22,10 +23,10 @@ class AppInitializer {
       // Load settings và khởi tạo SettingsService
       final settings = await _loadSettings();
       
-      debugPrint('App initialization completed successfully');
+  debugPrintSuccess('SERVICES', 'App initialization completed successfully');
       return settings;
     } catch (e) {
-      debugPrint('Error during app initialization: $e');
+  debugPrintError('SERVICES', 'Error during app initialization: $e');
       rethrow; // Để main có thể xử lý lỗi
     }
   }
@@ -39,17 +40,17 @@ class AppInitializer {
       // Settings are now automatically loaded through StorageManager
       // No need for manual loading as SettingsService uses StorageManager directly
       
-      debugPrint('Settings loaded successfully');
+  debugPrintSuccess('SERVICES', 'Settings loaded successfully');
       return settingsService;
     } catch (e) {
-      debugPrint('Error loading settings: $e');
+  debugPrintError('SERVICES', 'Error loading settings: $e');
       rethrow;
     }
   }
   
   // Load settings and update ThemeProvider - Updated to use StorageManager
   static Future<void> loadSettingsAndUpdateTheme(BuildContext context) async {
-    debugPrint('AppInitializer: Loading settings and updating theme...');
+  debugPrintSpecial('SERVICES', 'AppInitializer: Loading settings and updating theme...');
     try {
       final isDarkMode = StorageManager.getSetting<bool>(SettingsKeys.darkMode, defaultValue: false) ?? false;
       
@@ -57,19 +58,19 @@ class AppInitializer {
       final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
       await themeProvider.setDarkMode(isDarkMode);
       
-      debugPrint('AppInitializer: Theme updated from settings successfully');
+  debugPrintSuccess('SERVICES', 'AppInitializer: Theme updated from settings successfully');
     } catch (e) {
-      debugPrint('AppInitializer: Error updating theme from settings: $e');
+  debugPrintError('SERVICES', 'AppInitializer: Error updating theme from settings: $e');
     }
   }
   
   static Future<void> dispose() async {
-    debugPrint('AppInitializer: Starting cleanup...');
+  debugPrintSpecial('SERVICES', 'AppInitializer: Starting cleanup...');
     try {
       await StorageManager.dispose();
-      debugPrint('AppInitializer: Cleanup completed successfully');
+  debugPrintSuccess('SERVICES', 'AppInitializer: Cleanup completed successfully');
     } catch (e) {
-      debugPrint('AppInitializer: Error during cleanup: $e');
+  debugPrintError('SERVICES', 'AppInitializer: Error during cleanup: $e');
     }
   }
 }

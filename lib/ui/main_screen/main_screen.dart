@@ -1,3 +1,4 @@
+import '../../utils/debug_utils.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/shared/appbar.dart';
 import '../../widgets/shared/navigationbar.dart';
@@ -39,7 +40,7 @@ class MainScreenState extends State<MainScreen> {
           setState(() {
             currentIndex = index;
           });
-          debugPrint('MainScreen currentIndex = $index');
+          debugPrintInfo('UI', 'MainScreen currentIndex = $index');
         },
       ),
     );

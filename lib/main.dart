@@ -1,3 +1,4 @@
+import 'utils/debug_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'themes/theme_provider.dart';
@@ -31,7 +32,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MainApp: Building UI with initializationSuccess: $initializationSuccess');
+  debugPrintSuccess('MAIN', 'Building UI with initializationSuccess: $initializationSuccess');
     
     return MultiProvider(
       providers: AppProviders.providers(settingsService),
@@ -53,17 +54,17 @@ class MainApp extends StatelessWidget {
 }
 
 Future<(SettingsService?, bool)> initializeApp() async {
-  debugPrint('Main: Starting app initialization...');
+  debugPrintSpecial('MAIN', 'Starting app initialization...');
   SettingsService? settingsService;
   bool initializationSuccess = false;
 
   try {
     settingsService = await AppInitializer.initialize();
     initializationSuccess = true;
-    debugPrint('Main: App initialization completed successfully');
+  debugPrintSuccess('MAIN', 'App initialization completed successfully');
   } catch (e) {
-    debugPrint('Main: App initialization failed: $e');
-    debugPrint('Main: App will continue with default settings');
+  debugPrintError('MAIN', 'App initialization failed: $e');
+  debugPrintWarning('MAIN', 'App will continue with default settings');
   }
 
   return (settingsService, initializationSuccess);

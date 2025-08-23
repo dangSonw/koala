@@ -1,3 +1,4 @@
+import '../utils/debug_utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -20,14 +21,14 @@ class AppProviders {
       ];
 
   static ThemeProvider _createThemeProvider() {
-    debugPrint('[AppProviders]: Creating ThemeProvider...');
+  debugPrintSpecial('PROVIDER', 'Creating ThemeProvider...');
     final provider = ThemeProvider();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint('[AppProviders]: Initializing ThemeProvider after UI render...');
+  debugPrintSpecial('PROVIDER', 'Initializing ThemeProvider after UI render...');
       provider.initialize().catchError((e) {
-        debugPrint('[AppProviders]: ThemeProvider initialization failed: $e');
-        debugPrint('[AppProviders]: UI continues with default theme');
+  debugPrintError('PROVIDER', 'ThemeProvider initialization failed: $e');
+  debugPrintWarning('PROVIDER', 'UI continues with default theme');
       });
     });
 
@@ -35,12 +36,12 @@ class AppProviders {
   }
 
   static SettingsService _createSettingsService(SettingsService? settingsService) {
-    debugPrint('[AppProviders]: Creating non-null SettingsService...');
+  debugPrintSpecial('PROVIDER', 'Creating non-null SettingsService...');
     if (settingsService != null) {
-      debugPrint('[AppProviders]: Using initialized SettingsService');
+  debugPrintSuccess('PROVIDER', 'Using initialized SettingsService');
       return settingsService;
     }
-    debugPrint('[AppProviders]: Initialization failed, using fallback SettingsService.instance');
+  debugPrintWarning('PROVIDER', 'Initialization failed, using fallback SettingsService.instance');
     return SettingsService.instance;
   }
 }
