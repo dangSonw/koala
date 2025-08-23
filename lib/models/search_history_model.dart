@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import '../cache/storage_manager.dart';
 
 /// Wrapper around the `search_history` Hive box.

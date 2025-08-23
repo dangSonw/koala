@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import '../cache/storage_manager.dart';
 
 /// Lightweight wrapper around the `favorites` Hive box.
