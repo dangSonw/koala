@@ -3,7 +3,6 @@ class AppImages {
   // static const String _imageDir = 'assets/images';
   // static const String _backgroundDir = 'assets/images/background';
 
-  // Placeholder/fallbacks
   static const String placeholder = 'assets/images/background/login_background.jpg';
 
   // Animal images (expected asset paths; add files to these paths to use real images)
