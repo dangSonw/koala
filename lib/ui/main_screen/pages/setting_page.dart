@@ -126,14 +126,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ProfileStats(label: 'Favorites', value: '12'),
-                      ProfileStats(label: 'Searches', value: '45'),
-                      ProfileStats(label: 'Categories', value: '6'),
-                    ],
-                  ),
                 ],
               ),
             ),
