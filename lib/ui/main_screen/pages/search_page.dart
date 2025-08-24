@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/native/main_screen/search_page/search_bar.dart';
-import '../../../widgets/native/main_screen/search_page/filter_chips.dart';
 import '../../../widgets/native/main_screen/search_page/recent_searches.dart';
 import '../../../widgets/native/main_screen/search_page/popular_searches.dart';
 
@@ -22,7 +21,6 @@ class _SearchPageState extends State<SearchPage> {
 
   void _performSearch(String query) => _provider.performSearch(query);
   void _clearSearch() => _provider.clearSearch();
-  void _onFilterSelected(String filter) => _provider.setFilter(filter);
   void _onSearchTap(String search) {
     _provider.controller.text = search;
     _provider.performSearch(search);
@@ -35,7 +33,6 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       body: Column(
         children: [
-          // Search Header
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -57,7 +54,6 @@ class _SearchPageState extends State<SearchPage> {
                   onSubmitted: _performSearch,
                   onClear: _clearSearch,
                   onVoiceSearch: () {
-                    
                     debugPrintInfo('[SEARCH]','Voice search');
                   },
                   onChanged: (value) {
@@ -66,18 +62,10 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 
                 const SizedBox(height: 12),
-                
-                // Filter Chips
-                FilterChips(
-                  filters: provider.filters,
-                  selectedFilter: provider.selectedFilter,
-                  onFilterSelected: _onFilterSelected,
-                ),
               ],
             ),
           ),
 
-          // Search Content
           Expanded(
             child: provider.query.isEmpty
                 ? _buildSearchSuggestions()
@@ -97,7 +85,6 @@ class _SearchPageState extends State<SearchPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Recent Searches
           RecentSearches(
             searches: provider.recentSearches,
             onSearchTap: _onSearchTap,

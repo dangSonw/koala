@@ -9,7 +9,6 @@ class SearchProvider extends ChangeNotifier {
   String _selectedFilter = 'All';
   String _query = '';
 
-  final List<String> filters = const ['All', 'Mammals', 'Birds', 'Reptiles', 'Fish', 'Insects'];
   final List<String> _recentSearches = ['Tiger', 'Elephant', 'Penguin', 'Shark', 'Eagle'];
   final List<String> popularSearches = const ['Lion', 'Dolphin', 'Butterfly', 'Snake', 'Whale', 'Owl', 'Monkey', 'Turtle'];
 
