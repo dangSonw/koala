@@ -37,6 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
         case SettingsKeys.darkMode:
           success = await _settings.setDarkMode(value as bool);
           if (success) {
+            if (!mounted) return;
             context.read<ThemeProvider>().toggleThemeLegacy(value);
           }
           break;
