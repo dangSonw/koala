@@ -8,7 +8,6 @@ import '../../../models/settings_keys.dart';
 
 import '../../../widgets/native/main_screen/setting_page/settings_section.dart';
 import '../../../widgets/native/main_screen/setting_page/settings_tile.dart';
-import '../../../widgets/native/main_screen/setting_page/profile_stats.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

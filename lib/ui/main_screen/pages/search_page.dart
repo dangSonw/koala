@@ -104,13 +104,11 @@ class _SearchPageState extends State<SearchPage> {
             onClear: _clearRecentSearches,
           ),
 
-          // Popular Searches
           PopularSearches(
             searches: provider.popularSearches,
             onSearchTap: _onSearchTap,
           ),
 
-          // Search Tips
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
