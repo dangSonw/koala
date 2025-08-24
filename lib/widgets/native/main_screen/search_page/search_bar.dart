@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../themes/themes.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -22,7 +23,7 @@ class CustomSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Theme.of(context).colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(25),
       ),
       child: TextField(

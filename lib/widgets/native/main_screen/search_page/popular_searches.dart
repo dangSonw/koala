@@ -39,7 +39,7 @@ class PopularSearches extends StatelessWidget {
               onTap: () => onSearchTap(search),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: Theme.of(context).colorScheme.onPrimary),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(

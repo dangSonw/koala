@@ -31,9 +31,9 @@ class FilterChips extends StatelessWidget {
               onSelected: (selected) {
                 onFilterSelected(filter);
               },
-              backgroundColor: Colors.grey.shade200,
-              selectedColor: Colors.blue.shade100,
-              checkmarkColor: Colors.blue,
+              backgroundColor: Theme.of(context).colorScheme.background,
+              selectedColor: Theme.of(context).colorScheme.primary,
+              checkmarkColor: Theme.of(context).colorScheme.onPrimary,
             ),
           );
         },
