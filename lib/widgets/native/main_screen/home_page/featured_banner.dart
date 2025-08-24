@@ -88,7 +88,6 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            // Keep names local to widget for now; could be exposed from provider later
                             'Featured #${index + 1}',
                             style: const TextStyle(
                               color: Colors.white,
@@ -98,7 +97,7 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
                           ),
                           const Text(
                             'Discover amazing creatures',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white70,
                               fontSize: 14,
                             ),
@@ -112,7 +111,6 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
             ),
           ),
           const SizedBox(height: 8),
-          // Page Indicator
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(

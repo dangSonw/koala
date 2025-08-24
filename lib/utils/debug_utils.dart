@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-/// Các hàm debugPrint tiện ích với mã màu và vị trí
+
 void debugPrintWarning(String location, String message) {
   debugPrint('\x1B[33m [$location]: $message \x1B[0m');
 }

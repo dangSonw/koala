@@ -3,7 +3,6 @@ import '../../themes/colors.dart';
 import '../../asset/images_assets.dart';
 
 class HomeService {
-  // Data for featured animals
   static List<String> getFeaturedImages() {
     return [
       AppImages.featured1,
@@ -12,7 +11,6 @@ class HomeService {
     ];
   }
 
-  // Data for animal categories
   static List<Map<String, dynamic>> getCategories() {
     return [
       {'name': 'Mammals', 'icon': Icons.pets, 'color': AppColors.mammals, 'count': 5416},
@@ -24,7 +22,6 @@ class HomeService {
     ];
   }
 
-  // Data for recent animals
   static List<Map<String, dynamic>> getRecentAnimals() {
     return [
       {'name': 'Bengal Tiger', 'image': AppImages.tiger, 'category': 'Mammals'},
@@ -34,18 +31,15 @@ class HomeService {
     ];
   }
 
-  // Refresh data logic
   static Future<void> refreshData() async {
     await Future.delayed(const Duration(seconds: 1));
   }
 
-  // Get featured animal name by index
   static String getFeaturedAnimalName(int index) {
     final names = ['Majestic Tiger', 'Gentle Elephant', 'Emperor Penguin'];
     return names[index % names.length];
   }
 
-  // Get featured animal description by index
   static String getFeaturedAnimalDescription(int index) {
     final descriptions = ['King of the jungle', 'Gentle giant', 'Emperor of the ice'];
     return descriptions[index % descriptions.length];

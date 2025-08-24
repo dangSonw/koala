@@ -17,28 +17,22 @@ class AppInitializer {
 
   static Future<SettingsService> initialize() async {
     try {
-      // Khởi tạo StorageManager (bao gồm Hive)
       await StorageManager.initialize();
       
-      // Load settings và khởi tạo SettingsService
       final settings = await _loadSettings();
       
   debugPrintSuccess('SERVICES', 'App initialization completed successfully');
       return settings;
     } catch (e) {
   debugPrintError('SERVICES', 'Error during app initialization: $e');
-      rethrow; // Để main có thể xử lý lỗi
+      rethrow;
     }
   }
   
   static Future<SettingsService> _loadSettings() async {
     try {
-      // Khởi tạo SettingsService
       final settingsService = await SettingsService.getInstance();
       _settingsService = settingsService;
-      
-      // Settings are now automatically loaded through StorageManager
-      // No need for manual loading as SettingsService uses StorageManager directly
       
   debugPrintSuccess('SERVICES', 'Settings loaded successfully');
       return settingsService;
@@ -48,13 +42,11 @@ class AppInitializer {
     }
   }
   
-  // Load settings and update ThemeProvider - Updated to use StorageManager
   static Future<void> loadSettingsAndUpdateTheme(BuildContext context) async {
   debugPrintSpecial('SERVICES', 'AppInitializer: Loading settings and updating theme...');
     try {
       final isDarkMode = StorageManager.getSetting<bool>(SettingsKeys.darkMode, defaultValue: false) ?? false;
-      
-      // Update ThemeProvider
+
       final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
       await themeProvider.setDarkMode(isDarkMode);
       

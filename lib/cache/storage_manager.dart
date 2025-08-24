@@ -4,7 +4,6 @@ import '../models/box_names.dart';
 
 class StorageManager {
   static Box<dynamic>? _settingsBox;
-  static Box<dynamic>? _favoritesBox;
   static Box<dynamic>? _searchHistoryBox;
   
   static bool _isInitialized = false;
@@ -19,7 +18,6 @@ class StorageManager {
       
       // Open all required boxes
       _settingsBox = await Hive.openBox(BoxNames.settings);
-      _favoritesBox = await Hive.openBox(BoxNames.favorites);
       _searchHistoryBox = await Hive.openBox(BoxNames.searchHistory);
       
       _isInitialized = true;
@@ -36,14 +34,6 @@ class StorageManager {
       throw Exception('StorageManager not initialized. Call initialize() first.');
     }
     return _settingsBox!;
-  }
-  
-  // Get favorites box
-  static Box<dynamic> get favoritesBox {
-    if (!_isInitialized || _favoritesBox == null) {
-      throw Exception('StorageManager not initialized. Call initialize() first.');
-    }
-    return _favoritesBox!;
   }
   
   // Get search history box
@@ -89,7 +79,6 @@ class StorageManager {
       await Hive.close();
       _isInitialized = false;
       _settingsBox = null;
-      _favoritesBox = null;
       _searchHistoryBox = null;
   debugPrintSuccess('CACHE', 'StorageManager disposed successfully');
     } catch (e) {

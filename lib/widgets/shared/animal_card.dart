@@ -38,7 +38,6 @@ class AnimalCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image section
             ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
               child: Stack(
@@ -68,7 +67,6 @@ class AnimalCard extends StatelessWidget {
               ),
             ),
             
-            // Content section
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -120,12 +118,10 @@ class AnimalCard extends StatelessWidget {
     );
   }
 
-  // Build image widget that handles both network and asset images
   Widget _buildImage() {
     Widget imageWidget;
     
     if (image.startsWith('http')) {
-      // Network image
       imageWidget = Image.network(
         image,
         width: double.infinity,
@@ -152,7 +148,6 @@ class AnimalCard extends StatelessWidget {
         },
       );
     } else {
-      // Asset image
       imageWidget = Image.asset(
         image,
         width: double.infinity,
@@ -167,8 +162,7 @@ class AnimalCard extends StatelessWidget {
     
     return imageWidget;
   }
-  
-  // Build error placeholder with better visual
+
   Widget _buildErrorPlaceholder(BuildContext context) {
     return Container(
       width: double.infinity,
