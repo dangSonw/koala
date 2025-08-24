@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../asset/images_assets.dart';
+import '../../services/main_screen/search_page_services.dart';
 
 class SearchProvider extends ChangeNotifier {
   final TextEditingController controller = TextEditingController();
@@ -29,7 +29,6 @@ class SearchProvider extends ChangeNotifier {
   void setFilter(String filter) {
     _selectedFilter = filter;
     notifyListeners();
-    // Optionally re-run search with new filter
     if (_query.isNotEmpty) {
       performSearch(_query);
     }
@@ -41,41 +40,7 @@ class SearchProvider extends ChangeNotifier {
     _query = trimmed;
     _setLoading(true);
 
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 600));
-
-    // Mocked results filtered by category when applicable
-    final all = [
-      {
-        'name': 'Bengal Tiger',
-        'scientificName': 'Panthera tigris tigris',
-        'category': 'Mammals',
-        'habitat': 'Tropical forests',
-        'image': AppImages.tiger,
-        'endangered': true,
-      },
-      {
-        'name': 'African Elephant',
-        'scientificName': 'Loxodonta africana',
-        'category': 'Mammals',
-        'habitat': 'Savanna',
-        'image': AppImages.elephant,
-        'endangered': true,
-      },
-      {
-        'name': 'Emperor Penguin',
-        'scientificName': 'Aptenodytes forsteri',
-        'category': 'Birds',
-        'habitat': 'Antarctica',
-        'image': AppImages.penguin,
-        'endangered': false,
-      },
-    ];
-
-    _results = all
-        .where((e) => e['name'].toString().toLowerCase().contains(trimmed.toLowerCase()))
-        .where((e) => _selectedFilter == 'All' || e['category'] == _selectedFilter)
-        .toList();
+    _results = await SearchService.searchAnimals(trimmed, _selectedFilter);
 
     _addRecent(trimmed);
     _setLoading(false);
