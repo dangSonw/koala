@@ -47,12 +47,14 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
               },
               itemCount: featuredImages.length,
               itemBuilder: (context, index) {
-                if (featuredImages.isEmpty) {
+                final imageUrl = featuredImages[index];
+                debugPrint('Featured image URL: $imageUrl');
+                if (imageUrl == null || imageUrl.isEmpty) {
                   return Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                     child: Icon(
                       Icons.image_not_supported,
@@ -64,47 +66,64 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
                   margin: const EdgeInsets.only(right: 8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    image: DecorationImage(
-                      image: AssetImage(featuredImages[index]),
-                      fit: BoxFit.cover,
-                    ),
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          Colors.black.withValues(alpha: 0.7),
-                        ],
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Featured #${index + 1}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                  clipBehavior: Clip.hardEdge,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            alignment: Alignment.center,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            child: Icon(
+                              Icons.broken_image,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
-                          ),
-                          const Text(
-                            'Discover amazing creatures',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    ),
+
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withValues(alpha: 0.7),
+                            ],
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Featured #${index + 1}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Text(
+                                'Discover amazing creatures',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },

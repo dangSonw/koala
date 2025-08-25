@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import '../../services/main_screen/home_page_services.dart';
 
 class HomeProvider extends ChangeNotifier {
+  late HomeService homeService = HomeService();
   bool _loading = false;
-  List<String> _featuredImages = [];
+  List<String?> _featuredImages = [];
   List<Map<String, dynamic>> _recentAnimals = [];
 
   bool get isLoading => _loading;
-  List<String> get featuredImages => _featuredImages;
+  List<String?> get featuredImages => _featuredImages;
   List<Map<String, dynamic>> get recentAnimals => _recentAnimals;
 
   HomeProvider() {
@@ -17,15 +18,16 @@ class HomeProvider extends ChangeNotifier {
   Future<void> load() async {
     _setLoading(true);
     try {
-      _featuredImages = HomeService.getFeaturedImages();
-      _recentAnimals = HomeService.getRecentAnimals();
+      await homeService.loadAllImages();
+      _featuredImages = homeService.getFeaturedImages();
+      _recentAnimals = homeService.getRecentAnimals();
     } finally {
       _setLoading(false);
     }
   }
 
   Future<void> refresh() async {
-    await HomeService.refreshData();
+    await homeService.refreshData();
     await load();
   }
 
