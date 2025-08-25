@@ -24,7 +24,7 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
     final featuredImages = context.watch<HomeProvider>().featuredImages;
     
     return Container(
-      height: 220,
+      height: 400,
       margin: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +105,7 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Featured #${index + 1}',
+                                'Animal #${index + 1}',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -113,7 +113,7 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
                                 ),
                               ),
                               const Text(
-                                'Discover amazing creatures',
+                                'Nothing to see here',
                                 style: TextStyle(
                                   color: Colors.white70,
                                   fontSize: 14,
