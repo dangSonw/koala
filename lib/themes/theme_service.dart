@@ -5,7 +5,6 @@ import '../utils/debug_utils.dart';
 class ThemeService {
   static const String _themeKey = SettingsKeys.darkMode;
   
-  // Get current theme mode from Hive
   static bool getDarkMode() {
     try {
       return StorageManager.getSetting<bool>(_themeKey, defaultValue: false) ?? false;
@@ -15,7 +14,6 @@ class ThemeService {
     }
   }
   
-  // Save theme mode to Hive
   static Future<bool> setDarkMode(bool isDarkMode) async {
     try {
       await StorageManager.setSetting(_themeKey, isDarkMode);
@@ -26,7 +24,6 @@ class ThemeService {
     }
   }
   
-  // Toggle theme mode
   static Future<bool> toggleTheme() async {
     try {
       final currentMode = getDarkMode();

@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Welcome Header
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -65,13 +64,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              // Featured Animals Banner
               const FeaturedBanner(),
 
-              // Categories Section
               const CategoriesSection(),
 
-              // Recent Animals Section
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(

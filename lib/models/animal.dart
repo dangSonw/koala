@@ -11,7 +11,6 @@ class Animal {
     required this.wikiUrl,
   });
 
-  // Parse từ Wikipedia API JSON
   factory Animal.fromWikipediaJson(Map<String, dynamic> json) {
     return Animal(
       name: json['title'] ?? '',

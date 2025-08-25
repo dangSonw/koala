@@ -5,24 +5,18 @@ import '../../models/settings_keys.dart';
 class SettingsService {
   static SettingsService? _instance;
   
-  // Keys are centralized in SettingsKeys
-
-  // Private constructor
   SettingsService._();
 
-  // Singleton instance
   static Future<SettingsService> getInstance() async {
     _instance ??= SettingsService._();
     return _instance!;
   }
 
-  // Synchronous accessor to always get a non-null instance without awaiting
   static SettingsService get instance {
     _instance ??= SettingsService._();
     return _instance!;
   }
 
-  // Generic method to get value using StorageManager
   T? getValue<T>(String key, {T? defaultValue}) {
     try {
       return StorageManager.getSetting<T>(key, defaultValue: defaultValue);
@@ -32,7 +26,6 @@ class SettingsService {
     }
   }
 
-  // Generic method to set value using StorageManager
   Future<bool> setValue<T>(String key, T value) async {
     try {
       await StorageManager.setSetting(key, value);
@@ -43,7 +36,6 @@ class SettingsService {
     }
   }
 
-  // Getters for specific settings with default values - Safe null handling
   bool get darkMode => getValue<bool>(SettingsKeys.darkMode, defaultValue: false) ?? false;
   bool get notifications => getValue<bool>(SettingsKeys.notifications, defaultValue: true) ?? true;
   bool get offlineMode => getValue<bool>(SettingsKeys.offlineMode, defaultValue: false) ?? false;
@@ -55,7 +47,6 @@ class SettingsService {
   String get imageQuality => getValue<String>(SettingsKeys.imageQuality, defaultValue: 'High') ?? 'High';
   String get downloadQuality => getValue<String>(SettingsKeys.downloadQuality, defaultValue: 'Medium') ?? 'Medium';
 
-  // Setters for specific settings
   Future<bool> setDarkMode(bool value) => setValue(SettingsKeys.darkMode, value);
   Future<bool> setNotifications(bool value) => setValue(SettingsKeys.notifications, value);
   Future<bool> setOfflineMode(bool value) => setValue(SettingsKeys.offlineMode, value);

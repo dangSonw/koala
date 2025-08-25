@@ -9,7 +9,6 @@ class ThemeProvider extends ChangeNotifier {
   bool get isDarkMode => _isDarkMode;
   bool get isInitialized => _isInitialized;
 
-  // Initialize theme from storage
   Future<void> initialize() async {
     if (_isInitialized) {
   debugPrintInfo('THEME', 'Already initialized, skipping');
@@ -31,7 +30,6 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
-  // Set theme mode
   Future<void> setDarkMode(bool mode) async {
     if (_isDarkMode == mode) {
   debugPrintInfo('THEME', 'Theme mode already set to $mode, skipping');
@@ -53,7 +51,6 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
-  // Toggle theme mode
   Future<void> toggleTheme() async {
   debugPrintSpecial('THEME', 'Toggling theme from $_isDarkMode to ${!_isDarkMode}...');
     try {
@@ -70,7 +67,6 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
-  // Legacy method for backward compatibility
   void toggleThemeLegacy(bool mode) {
     setDarkMode(mode);
   }
