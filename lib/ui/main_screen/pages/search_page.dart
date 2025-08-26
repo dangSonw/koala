@@ -26,6 +26,7 @@ class _SearchPageState extends State<SearchPage> {
     _provider.performSearch(search);
   }
   void _clearRecentSearches() => _provider.clearRecentSearches();
+  void _removeRecentSearch(int index) => _provider.removeRecentSearch(index);
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +90,7 @@ class _SearchPageState extends State<SearchPage> {
             searches: provider.recentSearches,
             onSearchTap: _onSearchTap,
             onClear: _clearRecentSearches,
+            onRemove: _removeRecentSearch,
           ),
 
           PopularSearches(
@@ -151,59 +153,148 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget _buildSearchResults() {
     final provider = context.watch<SearchProvider>();
+    
+    if (provider.results.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.search_off,
+              size: 64,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No animals found',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Try searching for different terms',
+              style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: provider.results.length,
       itemBuilder: (context, index) {
-        final result = provider.results[index];
+        final animal = provider.results[index];
         return Card(
           margin: const EdgeInsets.only(bottom: 12),
-          child: ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                result['image'],
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 60,
-                    height: 60,
-                    color: Theme.of(context).colorScheme.surfaceVariant,
-                    child: const Icon(Icons.image_not_supported),
-                  );
-                },
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: InkWell(
+            onTap: () {
+              debugPrintInfo('SEARCH', 'Navigate to ${animal.name}');
+              // TODO: Navigate to animal detail page
+            },
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: animal.imageUrl.isNotEmpty
+                        ? Image.network(
+                            animal.imageUrl,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                width: 80,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.surfaceVariant,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  Icons.pets,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  size: 32,
+                                ),
+                              );
+                            },
+                          )
+                        : Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.surfaceVariant,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              Icons.pets,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              size: 32,
+                            ),
+                          ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          animal.name,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          animal.extract.length > 100 
+                              ? '${animal.extract.substring(0, 100)}...'
+                              : animal.extract,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                            height: 1.3,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.open_in_new,
+                              size: 16,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              'View on Wikipedia',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            title: Text(result['name']),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(result['scientificName']),
-                Text('${result['category']} • ${result['habitat']}'),
-              ],
-            ),
-            trailing: result['endangered']
-                ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.errorContainer,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      'Endangered',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onErrorContainer,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                : null,
-            onTap: () {
-              debugPrintInfo('SEARCH','Navigate to ${result['name']}');
-            },
           ),
         );
       },

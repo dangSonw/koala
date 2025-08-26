@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../services/main_screen/search_page_services.dart';
+import '../../models/animal.dart';
+import '../../models/search_history_model.dart';
+import '../../utils/debug_utils.dart';
 
 class SearchProvider extends ChangeNotifier {
   final TextEditingController controller = TextEditingController();
@@ -9,16 +12,26 @@ class SearchProvider extends ChangeNotifier {
   String _selectedFilter = 'All';
   String _query = '';
 
-  final List<String> _recentSearches = ['Tiger', 'Elephant', 'Penguin', 'Shark', 'Eagle'];
-  final List<String> popularSearches = const ['Lion', 'Dolphin', 'Butterfly', 'Snake', 'Whale', 'Owl', 'Monkey', 'Turtle'];
-
-  List<Map<String, dynamic>> _results = [];
+  List<String> _recentSearches = [];
+  List<String> _popularSearches = [];
+  List<Animal> _results = [];
 
   bool get isLoading => _isLoading;
   String get selectedFilter => _selectedFilter;
   String get query => _query;
   List<String> get recentSearches => List.unmodifiable(_recentSearches);
-  List<Map<String, dynamic>> get results => List.unmodifiable(_results);
+  List<String> get popularSearches => List.unmodifiable(_popularSearches);
+  List<Animal> get results => List.unmodifiable(_results);
+
+  SearchProvider() {
+    _loadInitialData();
+  }
+
+  void _loadInitialData() {
+    _recentSearches = SearchHistoryBox.getAll().reversed.toList();
+    _popularSearches = SearchService.getPopularSearches();
+    notifyListeners();
+  }
 
   void setQuery(String value) {
     _query = value;
@@ -36,12 +49,24 @@ class SearchProvider extends ChangeNotifier {
   Future<void> performSearch(String q) async {
     final trimmed = q.trim();
     if (trimmed.isEmpty) return;
+    
     _query = trimmed;
     _setLoading(true);
 
-    _results = await SearchService.searchAnimals(trimmed, _selectedFilter);
-
-    _addRecent(trimmed);
+    try {
+      debugPrintInfo('[SEARCH_PROVIDER]', 'Performing search for: $trimmed');
+      _results = await SearchService.searchAnimals(trimmed, filter: _selectedFilter);
+      
+      // Save to search history
+      await SearchHistoryBox.add(trimmed);
+      _recentSearches = SearchHistoryBox.getAll().reversed.toList();
+      
+      debugPrintInfo('[SEARCH_PROVIDER]', 'Found ${_results.length} results');
+    } catch (e) {
+      debugPrintInfo('[SEARCH_PROVIDER]', 'Search error: $e');
+      _results = [];
+    }
+    
     _setLoading(false);
   }
 
@@ -53,17 +78,18 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _addRecent(String value) {
-    _recentSearches.remove(value);
-    _recentSearches.insert(0, value);
-    if (_recentSearches.length > 10) {
-      _recentSearches.removeLast();
-    }
+  Future<void> clearRecentSearches() async {
+    await SearchHistoryBox.clear();
+    _recentSearches = [];
+    notifyListeners();
   }
 
-  void clearRecentSearches() {
-    _recentSearches.clear();
-    notifyListeners();
+  Future<void> removeRecentSearch(int index) async {
+    if (index >= 0 && index < _recentSearches.length) {
+      await SearchHistoryBox.removeAt(_recentSearches.length - 1 - index);
+      _recentSearches = SearchHistoryBox.getAll().reversed.toList();
+      notifyListeners();
+    }
   }
 
   void _setLoading(bool value) {

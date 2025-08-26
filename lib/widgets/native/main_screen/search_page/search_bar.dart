@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomSearchBar extends StatelessWidget {
+class CustomSearchBar extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final Function(String) onSubmitted;
@@ -19,35 +19,80 @@ class CustomSearchBar extends StatelessWidget {
   });
 
   @override
+  State<CustomSearchBar> createState() => _CustomSearchBarState();
+}
+
+class _CustomSearchBarState extends State<CustomSearchBar> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_onTextChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onTextChanged);
+    super.dispose();
+  }
+
+  void _onTextChanged() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onPrimary,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.1),
+            spreadRadius: 1,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        onSubmitted: onSubmitted,
+        controller: widget.controller,
+        focusNode: widget.focusNode,
+        onSubmitted: widget.onSubmitted,
+        textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           hintText: 'Search animals...',
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon: controller.text.isNotEmpty
+          hintStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
+          suffixIcon: widget.controller.text.isNotEmpty
               ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: onClear,
+                  icon: Icon(
+                    Icons.clear,
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
+                  onPressed: widget.onClear,
                 )
               : IconButton(
-                  icon: const Icon(Icons.mic),
-                  onPressed: onVoiceSearch,
+                  icon: Icon(
+                    Icons.mic,
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
+                  onPressed: widget.onVoiceSearch,
                 ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
-            vertical: 12,
+            vertical: 14,
           ),
         ),
-        onChanged: onChanged,
+        onChanged: widget.onChanged,
       ),
     );
   }
