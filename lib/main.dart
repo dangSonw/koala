@@ -11,10 +11,7 @@ import 'provider/provider_initializer.dart';
 import 'services/main_screen/setting_page_services.dart';
 import 'services/services_initializer.dart';
 
-import 'package:flutter/foundation.dart';
-
 Future<void> main() async {
-  debugDefaultTargetPlatformOverride = null;
   WidgetsFlutterBinding.ensureInitialized();
   final (settingsService, initializationSuccess) = await initializeApp();
   runApp(MainApp(

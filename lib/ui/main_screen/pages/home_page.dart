@@ -66,8 +66,6 @@ class _HomePageState extends State<HomePage> {
 
               const FeaturedBanner(),
 
-              const CategoriesSection(),
-
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -109,6 +107,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+
+              const CategoriesSection(),
+
+            
             ],
           ),
         ),
