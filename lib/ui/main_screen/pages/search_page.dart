@@ -97,42 +97,6 @@ class _SearchPageState extends State<SearchPage> {
             searches: provider.popularSearches,
             onSearchTap: _onSearchTap,
           ),
-
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Theme.of(context).colorScheme.outline),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.lightbulb, color: Theme.of(context).colorScheme.onPrimaryContainer),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Search Tips',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '• Use scientific names for precise results\n• Try habitat or location terms\n• Use category filters to narrow results',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
