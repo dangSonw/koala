@@ -70,8 +70,8 @@ class SearchService {
         final data = searchResponse.data as List;
         if (data.length >= 2) {
           final titles = data[1] as List;
-          final descriptions = data.length > 2 ? data[2] as List : <String>[];
-          final urls = data.length > 3 ? data[3] as List : <String>[];
+          // final descriptions = data.length > 2 ? data[2] as List : <String>[];
+          // final urls = data.length > 3 ? data[3] as List : <String>[];
           
           List<Animal> animals = [];
           for (int i = 0; i < titles.length && i < 3; i++) {
