@@ -72,6 +72,24 @@ class StorageManager {
       rethrow;
     }
   }
+
+  // Clear all settings
+  static Future<void> clearAllSettings() async {
+    if (!_isInitialized || _settingsBox == null) {
+  debugPrintWarning('CACHE', 'Not initialized, cannot clear settings');
+      throw Exception('StorageManager not initialized. Call initialize() first.');
+    }
+    await _settingsBox!.clear();
+  }
+
+  // Clear all search history
+  static Future<void> clearAllSearchHistory() async {
+    if (!_isInitialized || _searchHistoryBox == null) {
+  debugPrintWarning('CACHE', 'Not initialized, cannot clear search history');
+      throw Exception('StorageManager not initialized. Call initialize() first.');
+    }
+    await _searchHistoryBox!.clear();
+  }
   
   // Close all boxes
   static Future<void> dispose() async {

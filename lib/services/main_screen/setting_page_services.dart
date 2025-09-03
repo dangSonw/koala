@@ -57,4 +57,26 @@ class SettingsService {
   Future<bool> setLanguage(String value) => setValue(SettingsKeys.language, value);
   Future<bool> setImageQuality(String value) => setValue(SettingsKeys.imageQuality, value);
   Future<bool> setDownloadQuality(String value) => setValue(SettingsKeys.downloadQuality, value);
+
+  // Reset all settings to defaults by clearing settings box
+  Future<bool> resetAllSettings() async {
+    try {
+      await StorageManager.clearAllSettings();
+      return true;
+    } catch (e) {
+      debugPrint('Error resetting all settings: $e');
+      return false;
+    }
+  }
+
+  // Clear all search history
+  Future<bool> clearSearchHistory() async {
+    try {
+      await StorageManager.clearAllSearchHistory();
+      return true;
+    } catch (e) {
+      debugPrint('Error clearing search history: $e');
+      return false;
+    }
+  }
 }

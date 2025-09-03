@@ -233,6 +233,24 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
+
+            SettingsSection(
+              title: 'Utilities',
+              children: [
+                SettingsTile(
+                  icon: Icons.cleaning_services,
+                  title: 'Clear Search History',
+                  subtitle: 'Remove all your recent searches',
+                  onTap: _confirmClearHistory,
+                ),
+                SettingsTile(
+                  icon: Icons.restore,
+                  title: 'Reset to Defaults',
+                  subtitle: 'Restore all settings to default values',
+                  onTap: _confirmResetSettings,
+                ),
+              ],
+            ),
           ],
         ),
       );
@@ -319,6 +337,57 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         );
       },
+    );
+  }
+
+  Future<void> _confirmResetSettings() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Reset settings?'),
+        content: const Text('This will restore all settings to their default values.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Reset')),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    final ok = await _settings.resetAllSettings();
+    if (!mounted) return;
+    if (ok) {
+      // Re-apply theme from defaults
+      context.read<ThemeProvider>().toggleThemeLegacy(_settings.darkMode);
+      setState(() {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Settings reset to defaults')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to reset settings')),
+      );
+    }
+  }
+
+  Future<void> _confirmClearHistory() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Clear search history?'),
+        content: const Text('This will remove all saved recent searches.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Clear')),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    final ok = await _settings.clearSearchHistory();
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(ok ? 'Search history cleared' : 'Failed to clear search history')),
     );
   }
 }
