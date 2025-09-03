@@ -25,12 +25,33 @@ class _SearchPageState extends State<SearchPage> {
     _provider.controller.text = search;
     _provider.performSearch(search);
   }
+
+  Widget _buildTypeaheadSuggestions() {
+    final provider = context.watch<SearchProvider>();
+    final suggestions = provider.suggestions;
+    return ListView.separated(
+      padding: const EdgeInsets.all(16),
+      itemCount: suggestions.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      itemBuilder: (context, index) {
+        final s = suggestions[index];
+        return ListTile(
+          leading: const Icon(Icons.search),
+          title: Text(s),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          onTap: () => _onSearchTap(s),
+        );
+      },
+    );
+  }
   void _clearRecentSearches() => _provider.clearRecentSearches();
   void _removeRecentSearch(int index) => _provider.removeRecentSearch(index);
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<SearchProvider>();
+    final bool showTypeahead = provider.query.isNotEmpty && !provider.isLoading && provider.suggestions.isNotEmpty;
+
     return Scaffold(
       body: Column(
         children: [
@@ -72,7 +93,9 @@ class _SearchPageState extends State<SearchPage> {
                 ? _buildSearchSuggestions()
                 : provider.isLoading
                     ? _buildSearchLoading()
-                    : _buildSearchResults(),
+                    : showTypeahead
+                        ? _buildTypeaheadSuggestions()
+                        : _buildSearchResults(),
           ),
         ],
       ),

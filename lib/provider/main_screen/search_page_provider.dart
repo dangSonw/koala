@@ -22,6 +22,11 @@ class SearchProvider extends ChangeNotifier {
   List<String> get recentSearches => List.unmodifiable(_recentSearches);
   List<String> get popularSearches => List.unmodifiable(_popularSearches);
   List<Animal> get results => List.unmodifiable(_results);
+  List<String> get suggestions => _query.isEmpty
+      ? const []
+      : _popularSearches
+          .where((s) => s.toLowerCase().contains(_query.toLowerCase()))
+          .toList(growable: false);
 
   SearchProvider() {
     _loadInitialData();
