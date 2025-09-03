@@ -60,8 +60,12 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       child: TextField(
         controller: widget.controller,
         focusNode: widget.focusNode,
+        onTap: () => widget.focusNode.requestFocus(),
         onSubmitted: widget.onSubmitted,
         textInputAction: TextInputAction.search,
+        keyboardType: TextInputType.text,
+        enableSuggestions: true,
+        autocorrect: true,
         decoration: InputDecoration(
           hintText: 'Search animals...',
           hintStyle: TextStyle(

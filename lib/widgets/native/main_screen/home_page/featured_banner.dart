@@ -21,8 +21,27 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
 
   @override
   Widget build(BuildContext context) {
-    final featuredImages = context.watch<HomeProvider>().featuredImages;
+    final provider = context.watch<HomeProvider>();
+    final featuredImages = provider.featuredImages;
     
+    if (featuredImages.isEmpty) {
+      return Container(
+        height: 200,
+        margin: const EdgeInsets.all(16),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text(
+          'No featured images',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
+      );
+    }
+
     return Container(
       height: 400,
       margin: const EdgeInsets.all(16),
@@ -105,16 +124,16 @@ class _FeaturedBannerState extends State<FeaturedBanner> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Animal #${index + 1}',
+                                provider.homeService.getFeaturedAnimalName(index),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const Text(
-                                'Nothing to see here',
-                                style: TextStyle(
+                              Text(
+                                provider.homeService.getFeaturedAnimalDescription(index),
+                                style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 14,
                                 ),
